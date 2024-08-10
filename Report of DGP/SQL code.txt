@@ -1,0 +1,16 @@
+select dgp.country as Country,
+            dgp.year as Year,
+                dgp.GDP as DGP_Per_Capita,
+                    p.population as Population,
+                        coalesce(un.Unemployment, 0) AS Percent_Of_Unemployment,
+                            (dgp.GDP * p.Population) as Nominal_DGP
+
+from dgp_per_capita dgp
+left join population p
+on dgp.Country=p.country
+and dgp.Year=p.Year
+
+
+left join unemployment un
+on dgp.Country=un.Country
+and dgp.Year=un.Year;
